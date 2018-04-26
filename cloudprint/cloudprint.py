@@ -408,8 +408,8 @@ def process_job(cups_connection, cpp, printer, job):
         if 'request' in options:
             del options['request']
 
-        options = dict((str(k), str(v)) for k, v in list(options.items()))
-        options['job-originating-user-name'] = job['ownerId']
+        options = dict((str(k), str(v)) for k, v in list(options.items()) if v != 'None')
+        options['job-originating-user-name'] = job['ownerId'].encode('unicode_escape')
 
         # Cap the title length to 255, or cups will complain about invalid
         # job-name
@@ -425,7 +425,8 @@ def process_job(cups_connection, cpp, printer, job):
         cpp.finish_job(job['id'])
         num_retries = 0
 
-    except Exception:
+    except Exception, e:
+        LOGGER.debug(unicode_escape('ERROR detail: ' + e))
         if num_retries >= RETRIES:
             num_retries = 0
             cpp.fail_job(job['id'])
