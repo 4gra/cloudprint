@@ -1,0 +1,14 @@
+[Unit]
+Description=Google Cloud Print Daemon
+Requires=cups.service
+After=cups.service
+Documentation=https://github.com/4gra/cloudprint
+
+[Service]
+User=printer
+ExecStart=/usr/local/bin/cloudprint
+Restart=always
+RestartSec=300
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=cloudprint
