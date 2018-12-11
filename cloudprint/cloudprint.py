@@ -426,7 +426,7 @@ def process_job(cups_connection, cpp, printer, job):
         num_retries = 0
 
     except Exception, e:
-        LOGGER.debug(unicode_escape('ERROR detail: ' + e))
+        LOGGER.debug(unicode_escape('ERROR detail: %s' % e))
         if num_retries >= RETRIES:
             num_retries = 0
             cpp.fail_job(job['id'])
