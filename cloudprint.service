@@ -12,3 +12,6 @@ RestartSec=300
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=cloudprint
+
+[Install]
+WantedBy=multi-user.target
